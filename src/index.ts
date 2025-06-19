@@ -1,7 +1,8 @@
-import { main as embeddings_generator_main } from './embeddings_generator';
+import { main as update_user_channels_main } from './update_user_channels';
+
 
 async function main() {
-    await embeddings_generator_main();
+    await update_user_channels_main();
 }
 
 main();
