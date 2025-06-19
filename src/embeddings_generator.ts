@@ -10,6 +10,7 @@ const PAGE_SIZE = 25; // Very small page size for free tier
 const DELAY_BETWEEN_REQUESTS = 2000; // 2 seconds delay between requests
 const MAX_RETRIES = 3; // Maximum number of retries per chunk
 
+
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     throw new Error('Missing required environment variables');
 }
@@ -48,8 +49,27 @@ async function fetchWithRetry(from: number, to: number, retryCount = 0): Promise
     }
 }
 
+async function process_and_upload_chunk(castsData: CastRecord[]) {
+    try {
+        // Process the chunk
+        const processedUsers = filter_data(castsData);
+
+        if (processedUsers.length > 0) {
+            // Upload the processed users
+            const success = await upload_users_to_supabase(processedUsers);
+            if (success) {
+                console.log(`Successfully processed and uploaded ${processedUsers.length} users`);
+            } else {
+                console.error(`Failed to upload ${processedUsers.length} processed users`);
+            }
+        }
+    } catch (error) {
+        console.error('Error in processing and uploading chunk:', error);
+    }
+}
+
 async function fetch_casts_for_all() {
-    let allCasts: any[] = [];
+    let totalProcessed = 0;
     let hasMore = true;
     let currentPage = 0;
     let consecutiveErrors = 0;
@@ -66,21 +86,24 @@ async function fetch_casts_for_all() {
             if (!data || data.length === 0) {
                 hasMore = false;
             } else {
-                allCasts = allCasts.concat(data);
+                // Process and upload this chunk immediately
+                await process_and_upload_chunk(data);
+
+                totalProcessed += data.length;
                 currentPage++;
                 consecutiveErrors = 0; // Reset error counter on success
+
+                console.log(`Processed ${data.length} records. Total processed so far: ${totalProcessed}`);
 
                 // If we got less records than PAGE_SIZE, we've reached the end
                 if (data.length < PAGE_SIZE) {
                     hasMore = false;
                 }
-            }
 
-            console.log(`Fetched ${data?.length || 0} records. Total records so far: ${allCasts.length}`);
-
-            // Add delay before next request
-            if (hasMore) {
-                await delay(DELAY_BETWEEN_REQUESTS);
+                // Add delay before next request
+                if (hasMore) {
+                    await delay(DELAY_BETWEEN_REQUESTS);
+                }
             }
         } catch (e) {
             console.error(`Failed to fetch range ${from}-${to} after all retries:`, e);
@@ -93,7 +116,8 @@ async function fetch_casts_for_all() {
         console.warn('Stopped fetching due to too many consecutive errors');
     }
 
-    return allCasts;
+    console.log(`Completed processing with ${totalProcessed} total records processed`);
+    return totalProcessed;
 }
 
 function filter_data(castsData: CastRecord[]) {
@@ -109,9 +133,10 @@ function filter_data(castsData: CastRecord[]) {
                 userMap.set(fid, {
                     fid: fid,
                     user_name: authorData.username,
-                    following_count: 0,
-                    followers_count: 0,
-                    pfp_url: authorData.pfp_url
+                    following_count: authorData.following_count,
+                    follower_count: authorData.follower_count,
+                    pfp_url: authorData.pfp_url,
+                    verified_addresses: authorData.verified_addresses,
                 });
             }
         }
@@ -130,22 +155,14 @@ async function upload_users_to_supabase(userData: any[]) {
         return false;
     }
 
-    console.log(`Successfully uploaded ${userData.length} users to the database`);
     return true;
 }
 
 async function main() {
     try {
-        console.log('Fetching casts from database...');
-        const castsData = await fetch_casts_for_all();
-
-        console.log('Filtering data to extract user information...');
-        const userData = filter_data(castsData);
-
-        console.log('Uploading user data to users table...');
-        await upload_users_to_supabase(userData);
-
-        console.log('Process completed successfully!');
+        console.log('Starting to fetch and process casts...');
+        const totalProcessed = await fetch_casts_for_all();
+        console.log(`Process completed successfully! Total records processed: ${totalProcessed}`);
     } catch (error) {
         console.error('Error in main process:', error);
     }
