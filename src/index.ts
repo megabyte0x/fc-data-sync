@@ -1,8 +1,7 @@
-import { main as update_user_channels_main } from './update_user_channels';
-
+import { main as update_channel_member_main } from './update_channel_member';
 
 async function main() {
-    await update_user_channels_main();
+    await update_channel_member_main();
 }
 
 main();

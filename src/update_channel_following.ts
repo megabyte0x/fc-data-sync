@@ -1,8 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import * as dotenv from 'dotenv';
-import { ChannelsResponse } from './channels.types';
+import { ChannelsResponse } from './types/channel_following.types';
 import axios from 'axios';
-import { User } from './cast.types';
 
 dotenv.config();
 

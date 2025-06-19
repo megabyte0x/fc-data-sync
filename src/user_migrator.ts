@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import * as dotenv from 'dotenv';
-import { CastRecord } from './cast.types';
+import { CastRecord } from './types/cast.types';
 
 dotenv.config();
 

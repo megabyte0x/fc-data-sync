@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createClient } from '@supabase/supabase-js';
 import * as dotenv from 'dotenv';
-import { Cast, FeedResponse, PowerUserFIDsResponse, CastRecord } from './cast.types';
+import { CastRecord, Cast, FeedResponse, PowerUserFIDsResponse } from './types';
 
 dotenv.config();
 
