@@ -1,0 +1,19 @@
+{
+    "mcpServers": {
+        "supabase": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@supabase/mcp-server-supabase@latest",
+                "--access-token",
+                "sbp_271380154747979798f3ec7a3b5760aeeefd5c2d"
+            ]
+        },
+        "neynar": {
+            "command": "node",
+            "args": [
+                "/Users/megabyte0x/.mcp/neynar/src/index.js"
+            ]
+        }
+    }
+}

@@ -1,0 +1,722 @@
+{
+    "casts": [
+        {
+            "object": "cast",
+            "hash": "<string>",
+            "parent_hash": "<string>",
+            "parent_url": "<string>",
+            "root_parent_url": "<string>",
+            "parent_author": {
+                "fid": 3
+            },
+            "author": {
+                "object": "user",
+                "fid": 3,
+                "username": "<string>",
+                "display_name": "<string>",
+                "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7",
+                "pro": {
+                    "status": "subscribed",
+                    "subscribed_at": "2023-11-07T05:31:56Z",
+                    "expires_at": "2023-11-07T05:31:56Z"
+                },
+                "pfp_url": "<string>",
+                "profile": {
+                    "bio": {
+                        "text": "<string>",
+                        "mentioned_profiles": [
+                            {
+                                "object": "user_dehydrated",
+                                "fid": 3,
+                                "username": "<string>",
+                                "display_name": "<string>",
+                                "pfp_url": "<string>",
+                                "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                            }
+                        ],
+                        "mentioned_profiles_ranges": [
+                            {
+                                "start": 1,
+                                "end": 1
+                            }
+                        ],
+                        "mentioned_channels": [
+                            {
+                                "id": "<string>",
+                                "name": "<string>",
+                                "object": "channel_dehydrated",
+                                "image_url": "<string>",
+                                "viewer_context": {
+                                    "following": true,
+                                    "role": "member"
+                                }
+                            }
+                        ],
+                        "mentioned_channels_ranges": [
+                            {
+                                "start": 1,
+                                "end": 1
+                            }
+                        ]
+                    },
+                    "location": {
+                        "latitude": 0,
+                        "longitude": 0,
+                        "address": {
+                            "city": "<string>",
+                            "state": "<string>",
+                            "state_code": "<string>",
+                            "country": "<string>",
+                            "country_code": "<string>"
+                        },
+                        "radius": 1
+                    },
+                    "banner_url": "<string>"
+                },
+                "follower_count": 123,
+                "following_count": 123,
+                "verifications": [
+                    "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                ],
+                "verified_addresses": {
+                    "eth_addresses": [
+                        "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                    ],
+                    "sol_addresses": [
+                        "<string>"
+                    ],
+                    "primary": {
+                        "eth_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7",
+                        "sol_address": "<string>"
+                    }
+                },
+                "verified_accounts": [
+                    {
+                        "platform": "x",
+                        "username": "<string>"
+                    }
+                ],
+                "power_badge": true,
+                "experimental": {
+                    "deprecation_notice": "<string>",
+                    "neynar_user_score": 123
+                },
+                "viewer_context": {
+                    "following": true,
+                    "followed_by": true,
+                    "blocking": true,
+                    "blocked_by": true
+                },
+                "score": 123
+            },
+            "app": {
+                "object": "user_dehydrated",
+                "fid": 3,
+                "username": "<string>",
+                "display_name": "<string>",
+                "pfp_url": "<string>",
+                "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+            },
+            "text": "<string>",
+            "timestamp": "2023-11-07T05:31:56Z",
+            "embeds": [
+                {
+                    "cast_id": {
+                        "fid": 3,
+                        "hash": "<string>"
+                    },
+                    "cast": {
+                        "hash": "<string>",
+                        "parent_hash": "<string>",
+                        "parent_url": "<string>",
+                        "root_parent_url": "<string>",
+                        "parent_author": {
+                            "fid": 3
+                        },
+                        "author": {
+                            "object": "user_dehydrated",
+                            "fid": 3,
+                            "username": "<string>",
+                            "display_name": "<string>",
+                            "pfp_url": "<string>",
+                            "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                        },
+                        "app": {
+                            "object": "user_dehydrated",
+                            "fid": 3,
+                            "username": "<string>",
+                            "display_name": "<string>",
+                            "pfp_url": "<string>",
+                            "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                        },
+                        "text": "<string>",
+                        "timestamp": "2023-11-07T05:31:56Z",
+                        "embeds": [
+                            {
+                                "cast_id": {
+                                    "fid": 3,
+                                    "hash": "<string>"
+                                },
+                                "cast": {
+                                    "object": "cast_dehydrated",
+                                    "hash": "<string>",
+                                    "author": {
+                                        "object": "user_dehydrated",
+                                        "fid": 3,
+                                        "username": "<string>",
+                                        "display_name": "<string>",
+                                        "pfp_url": "<string>",
+                                        "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                                    },
+                                    "app": {
+                                        "object": "user_dehydrated",
+                                        "fid": 3,
+                                        "username": "<string>",
+                                        "display_name": "<string>",
+                                        "pfp_url": "<string>",
+                                        "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                                    }
+                                }
+                            }
+                        ],
+                        "channel": {
+                            "id": "<string>",
+                            "name": "<string>",
+                            "object": "channel_dehydrated",
+                            "image_url": "<string>",
+                            "viewer_context": {
+                                "following": true,
+                                "role": "member"
+                            }
+                        }
+                    }
+                }
+            ],
+            "type": "cast-mention",
+            "frames": [
+                {
+                    "version": "<string>",
+                    "image": "<string>",
+                    "frames_url": "<string>",
+                    "buttons": [
+                        {
+                            "title": "<string>",
+                            "index": 123,
+                            "action_type": "post",
+                            "target": "<string>",
+                            "post_url": "<string>"
+                        }
+                    ],
+                    "post_url": "<string>",
+                    "title": "<string>",
+                    "image_aspect_ratio": "<string>",
+                    "input": {
+                        "text": "<string>"
+                    },
+                    "state": {
+                        "serialized": "<string>"
+                    }
+                }
+            ],
+            "reactions": {
+                "likes": [
+                    {
+                        "fid": 3,
+                        "fname": "<string>"
+                    }
+                ],
+                "recasts": [
+                    {
+                        "fid": 3,
+                        "fname": "<string>"
+                    }
+                ],
+                "likes_count": 123,
+                "recasts_count": 123
+            },
+            "replies": {
+                "count": 123
+            },
+            "thread_hash": "<string>",
+            "mentioned_profiles": [
+                {
+                    "object": "user",
+                    "fid": 3,
+                    "username": "<string>",
+                    "display_name": "<string>",
+                    "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7",
+                    "pro": {
+                        "status": "subscribed",
+                        "subscribed_at": "2023-11-07T05:31:56Z",
+                        "expires_at": "2023-11-07T05:31:56Z"
+                    },
+                    "pfp_url": "<string>",
+                    "profile": {
+                        "bio": {
+                            "text": "<string>",
+                            "mentioned_profiles": [
+                                {
+                                    "object": "user_dehydrated",
+                                    "fid": 3,
+                                    "username": "<string>",
+                                    "display_name": "<string>",
+                                    "pfp_url": "<string>",
+                                    "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                                }
+                            ],
+                            "mentioned_profiles_ranges": [
+                                {
+                                    "start": 1,
+                                    "end": 1
+                                }
+                            ],
+                            "mentioned_channels": [
+                                {
+                                    "id": "<string>",
+                                    "name": "<string>",
+                                    "object": "channel_dehydrated",
+                                    "image_url": "<string>",
+                                    "viewer_context": {
+                                        "following": true,
+                                        "role": "member"
+                                    }
+                                }
+                            ],
+                            "mentioned_channels_ranges": [
+                                {
+                                    "start": 1,
+                                    "end": 1
+                                }
+                            ]
+                        },
+                        "location": {
+                            "latitude": 0,
+                            "longitude": 0,
+                            "address": {
+                                "city": "<string>",
+                                "state": "<string>",
+                                "state_code": "<string>",
+                                "country": "<string>",
+                                "country_code": "<string>"
+                            },
+                            "radius": 1
+                        },
+                        "banner_url": "<string>"
+                    },
+                    "follower_count": 123,
+                    "following_count": 123,
+                    "verifications": [
+                        "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                    ],
+                    "verified_addresses": {
+                        "eth_addresses": [
+                            "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                        ],
+                        "sol_addresses": [
+                            "<string>"
+                        ],
+                        "primary": {
+                            "eth_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7",
+                            "sol_address": "<string>"
+                        }
+                    },
+                    "verified_accounts": [
+                        {
+                            "platform": "x",
+                            "username": "<string>"
+                        }
+                    ],
+                    "power_badge": true,
+                    "experimental": {
+                        "deprecation_notice": "<string>",
+                        "neynar_user_score": 123
+                    },
+                    "viewer_context": {
+                        "following": true,
+                        "followed_by": true,
+                        "blocking": true,
+                        "blocked_by": true
+                    },
+                    "score": 123
+                }
+            ],
+            "mentioned_profiles_ranges": [
+                {
+                    "start": 1,
+                    "end": 1
+                }
+            ],
+            "mentioned_channels": [
+                {
+                    "id": "<string>",
+                    "name": "<string>",
+                    "object": "channel_dehydrated",
+                    "image_url": "<string>",
+                    "viewer_context": {
+                        "following": true,
+                        "role": "member"
+                    }
+                }
+            ],
+            "mentioned_channels_ranges": [
+                {
+                    "start": 1,
+                    "end": 1
+                }
+            ],
+            "channel": {
+                "id": "<string>",
+                "url": "<string>",
+                "name": "<string>",
+                "description": "<string>",
+                "object": "channel",
+                "created_at": 123,
+                "follower_count": 123,
+                "external_link": {
+                    "title": "<string>",
+                    "url": "<string>"
+                },
+                "image_url": "<string>",
+                "parent_url": "<string>",
+                "lead": {
+                    "object": "user",
+                    "fid": 3,
+                    "username": "<string>",
+                    "display_name": "<string>",
+                    "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7",
+                    "pro": {
+                        "status": "subscribed",
+                        "subscribed_at": "2023-11-07T05:31:56Z",
+                        "expires_at": "2023-11-07T05:31:56Z"
+                    },
+                    "pfp_url": "<string>",
+                    "profile": {
+                        "bio": {
+                            "text": "<string>",
+                            "mentioned_profiles": [
+                                {
+                                    "object": "user_dehydrated",
+                                    "fid": 3,
+                                    "username": "<string>",
+                                    "display_name": "<string>",
+                                    "pfp_url": "<string>",
+                                    "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                                }
+                            ],
+                            "mentioned_profiles_ranges": [
+                                {
+                                    "start": 1,
+                                    "end": 1
+                                }
+                            ],
+                            "mentioned_channels": [
+                                {
+                                    "id": "<string>",
+                                    "name": "<string>",
+                                    "object": "channel_dehydrated",
+                                    "image_url": "<string>",
+                                    "viewer_context": {
+                                        "following": true,
+                                        "role": "member"
+                                    }
+                                }
+                            ],
+                            "mentioned_channels_ranges": [
+                                {
+                                    "start": 1,
+                                    "end": 1
+                                }
+                            ]
+                        },
+                        "location": {
+                            "latitude": 0,
+                            "longitude": 0,
+                            "address": {
+                                "city": "<string>",
+                                "state": "<string>",
+                                "state_code": "<string>",
+                                "country": "<string>",
+                                "country_code": "<string>"
+                            },
+                            "radius": 1
+                        },
+                        "banner_url": "<string>"
+                    },
+                    "follower_count": 123,
+                    "following_count": 123,
+                    "verifications": [
+                        "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                    ],
+                    "verified_addresses": {
+                        "eth_addresses": [
+                            "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                        ],
+                        "sol_addresses": [
+                            "<string>"
+                        ],
+                        "primary": {
+                            "eth_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7",
+                            "sol_address": "<string>"
+                        }
+                    },
+                    "verified_accounts": [
+                        {
+                            "platform": "x",
+                            "username": "<string>"
+                        }
+                    ],
+                    "power_badge": true,
+                    "experimental": {
+                        "deprecation_notice": "<string>",
+                        "neynar_user_score": 123
+                    },
+                    "viewer_context": {
+                        "following": true,
+                        "followed_by": true,
+                        "blocking": true,
+                        "blocked_by": true
+                    },
+                    "score": 123
+                },
+                "moderator_fids": [
+                    3
+                ],
+                "member_count": 123,
+                "moderator": {
+                    "object": "user",
+                    "fid": 3,
+                    "username": "<string>",
+                    "display_name": "<string>",
+                    "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7",
+                    "pro": {
+                        "status": "subscribed",
+                        "subscribed_at": "2023-11-07T05:31:56Z",
+                        "expires_at": "2023-11-07T05:31:56Z"
+                    },
+                    "pfp_url": "<string>",
+                    "profile": {
+                        "bio": {
+                            "text": "<string>",
+                            "mentioned_profiles": [
+                                {
+                                    "object": "user_dehydrated",
+                                    "fid": 3,
+                                    "username": "<string>",
+                                    "display_name": "<string>",
+                                    "pfp_url": "<string>",
+                                    "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                                }
+                            ],
+                            "mentioned_profiles_ranges": [
+                                {
+                                    "start": 1,
+                                    "end": 1
+                                }
+                            ],
+                            "mentioned_channels": [
+                                {
+                                    "id": "<string>",
+                                    "name": "<string>",
+                                    "object": "channel_dehydrated",
+                                    "image_url": "<string>",
+                                    "viewer_context": {
+                                        "following": true,
+                                        "role": "member"
+                                    }
+                                }
+                            ],
+                            "mentioned_channels_ranges": [
+                                {
+                                    "start": 1,
+                                    "end": 1
+                                }
+                            ]
+                        },
+                        "location": {
+                            "latitude": 0,
+                            "longitude": 0,
+                            "address": {
+                                "city": "<string>",
+                                "state": "<string>",
+                                "state_code": "<string>",
+                                "country": "<string>",
+                                "country_code": "<string>"
+                            },
+                            "radius": 1
+                        },
+                        "banner_url": "<string>"
+                    },
+                    "follower_count": 123,
+                    "following_count": 123,
+                    "verifications": [
+                        "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                    ],
+                    "verified_addresses": {
+                        "eth_addresses": [
+                            "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                        ],
+                        "sol_addresses": [
+                            "<string>"
+                        ],
+                        "primary": {
+                            "eth_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7",
+                            "sol_address": "<string>"
+                        }
+                    },
+                    "verified_accounts": [
+                        {
+                            "platform": "x",
+                            "username": "<string>"
+                        }
+                    ],
+                    "power_badge": true,
+                    "experimental": {
+                        "deprecation_notice": "<string>",
+                        "neynar_user_score": 123
+                    },
+                    "viewer_context": {
+                        "following": true,
+                        "followed_by": true,
+                        "blocking": true,
+                        "blocked_by": true
+                    },
+                    "score": 123
+                },
+                "pinned_cast_hash": "0xfe90f9de682273e05b201629ad2338bdcd89b6be",
+                "hosts": [
+                    {
+                        "object": "user",
+                        "fid": 3,
+                        "username": "<string>",
+                        "display_name": "<string>",
+                        "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7",
+                        "pro": {
+                            "status": "subscribed",
+                            "subscribed_at": "2023-11-07T05:31:56Z",
+                            "expires_at": "2023-11-07T05:31:56Z"
+                        },
+                        "pfp_url": "<string>",
+                        "profile": {
+                            "bio": {
+                                "text": "<string>",
+                                "mentioned_profiles": [
+                                    {
+                                        "object": "user_dehydrated",
+                                        "fid": 3,
+                                        "username": "<string>",
+                                        "display_name": "<string>",
+                                        "pfp_url": "<string>",
+                                        "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                                    }
+                                ],
+                                "mentioned_profiles_ranges": [
+                                    {
+                                        "start": 1,
+                                        "end": 1
+                                    }
+                                ],
+                                "mentioned_channels": [
+                                    {
+                                        "id": "<string>",
+                                        "name": "<string>",
+                                        "object": "channel_dehydrated",
+                                        "image_url": "<string>",
+                                        "viewer_context": {
+                                            "following": true,
+                                            "role": "member"
+                                        }
+                                    }
+                                ],
+                                "mentioned_channels_ranges": [
+                                    {
+                                        "start": 1,
+                                        "end": 1
+                                    }
+                                ]
+                            },
+                            "location": {
+                                "latitude": 0,
+                                "longitude": 0,
+                                "address": {
+                                    "city": "<string>",
+                                    "state": "<string>",
+                                    "state_code": "<string>",
+                                    "country": "<string>",
+                                    "country_code": "<string>"
+                                },
+                                "radius": 1
+                            },
+                            "banner_url": "<string>"
+                        },
+                        "follower_count": 123,
+                        "following_count": 123,
+                        "verifications": [
+                            "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                        ],
+                        "verified_addresses": {
+                            "eth_addresses": [
+                                "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                            ],
+                            "sol_addresses": [
+                                "<string>"
+                            ],
+                            "primary": {
+                                "eth_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7",
+                                "sol_address": "<string>"
+                            }
+                        },
+                        "verified_accounts": [
+                            {
+                                "platform": "x",
+                                "username": "<string>"
+                            }
+                        ],
+                        "power_badge": true,
+                        "experimental": {
+                            "deprecation_notice": "<string>",
+                            "neynar_user_score": 123
+                        },
+                        "viewer_context": {
+                            "following": true,
+                            "followed_by": true,
+                            "blocking": true,
+                            "blocked_by": true
+                        },
+                        "score": 123
+                    }
+                ],
+                "viewer_context": {
+                    "following": true,
+                    "role": "member"
+                },
+                "description_mentioned_profiles": [
+                    {
+                        "object": "user_dehydrated",
+                        "fid": 3,
+                        "username": "<string>",
+                        "display_name": "<string>",
+                        "pfp_url": "<string>",
+                        "custody_address": "0x5a927ac639636e534b678e81768ca19e2c6280b7"
+                    }
+                ],
+                "description_mentioned_profiles_ranges": [
+                    {
+                        "start": 1,
+                        "end": 1
+                    }
+                ]
+            },
+            "viewer_context": {
+                "liked": true,
+                "recasted": true
+            },
+            "author_channel_context": {
+                "following": true,
+                "role": "member"
+            }
+        }
+    ],
+    "next": {
+        "cursor": "<string>"
+    }
+}
