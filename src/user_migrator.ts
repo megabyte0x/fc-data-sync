@@ -52,7 +52,9 @@ async function fetchWithRetry(from: number, to: number, retryCount = 0): Promise
 async function process_and_upload_chunk(castsData: CastRecord[]) {
     try {
         // Process the chunk
-        const processedUsers = filter_data(castsData);
+        // const processedUsers = filter_data(castsData);
+        //  const processedUsers = filter_display_name(castsData);
+        const processedUsers = filter_bio(castsData);
 
         if (processedUsers.length > 0) {
             // Upload the processed users
@@ -145,20 +147,67 @@ function filter_data(castsData: CastRecord[]) {
     return Array.from(userMap.values());
 }
 
-async function upload_users_to_supabase(userData: any[]) {
-    const { data, error } = await supabase
-        .from('users')
-        .upsert(userData, { onConflict: 'fid' });
+function filter_display_name(castsData: CastRecord[]) {
+    const userMap = new Map();
 
-    if (error) {
-        console.error('Error uploading users:', error);
-        return false;
+    castsData.forEach(record => {
+        const { fid, casts } = record;
+
+        if (casts && casts.data && casts.data.length > 0) {
+            const authorData = casts.data[0].author;
+
+            if (!userMap.has(fid)) {
+                userMap.set(fid, {
+                    fid: fid,
+                    display_name: authorData.display_name,
+                });
+            }
+        }
+    });
+
+    return Array.from(userMap.values());
+}
+
+function filter_bio(castsData: CastRecord[]) {
+    const userMap = new Map();
+
+    castsData.forEach(record => {
+        const { fid, casts } = record;
+
+        if (casts && casts.data && casts.data.length > 0) {
+            const authorData = casts.data[0].author;
+
+            if (!userMap.has(fid)) {
+                userMap.set(fid, {
+                    fid: fid,
+                    bio: authorData.profile.bio.text,
+                });
+            }
+        }
+    });
+
+    return Array.from(userMap.values());
+}
+
+async function upload_users_to_supabase(userData: any[]) {
+    for (const user of userData) {
+        const { error } = await supabase
+            .from('users')
+            .update({ bio: user.bio })
+            .eq('fid', user.fid);
+
+        console.log(`Uploaded user ${user.fid} with bio ${user.bio}`);
+
+        if (error) {
+            console.error('Error uploading users:', error);
+            return false;
+        }
     }
 
     return true;
 }
 
-async function main() {
+export async function main() {
     try {
         console.log('Starting to fetch and process casts...');
         const totalProcessed = await fetch_casts_for_all();
@@ -168,8 +217,3 @@ async function main() {
     }
 }
 
-export { fetch_casts_for_all, filter_data, upload_users_to_supabase, main };
-
-if (require.main === module) {
-    main();
-}
