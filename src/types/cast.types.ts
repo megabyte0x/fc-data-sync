@@ -140,14 +140,7 @@ export interface User extends UserDehydrated {
   follower_count: number;
   following_count: number;
   verifications: string[];
-  verified_addresses: {
-    eth_addresses: string[];
-    sol_addresses: string[];
-    primary: {
-      eth_address: string;
-      sol_address: string;
-    };
-  };
+  verified_addresses: Verified_Addresses;
   verified_accounts: {
     platform: string;
     username: string;
@@ -260,4 +253,12 @@ export interface PowerUserFIDsResponse {
   result: {
     fids: number[];
   }
+}
+export interface Verified_Addresses {
+  eth_addresses: string[];
+  sol_addresses: string[];
+  primary: {
+    eth_address: string;
+    sol_address: string;
+  };
 }

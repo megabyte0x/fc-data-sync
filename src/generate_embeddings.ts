@@ -1,139 +1,123 @@
-import { createClient } from '@supabase/supabase-js';
-import axios from 'axios';
-import * as dotenv from 'dotenv';
+import axios from "axios";
+import { User_Profile } from "./types";
 
-dotenv.config();
+// const profile = {
+//     bio: "Founder of a Web3 startup. Building on Base. Loves DAOs and open-source.",
+//     follower_count: 9000,
+//     following_count: 500,
+//     channels: ["base", "open-source", "web3", "daos"],
+// };
 
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
-const PAGE_SIZE = 25; // Very small page size for free tier
-const DELAY_BETWEEN_REQUESTS = 2000; // 2 seconds delay between requests
-const MAX_RETRIES = 3; // Maximum number of retries per chunk
+async function generateEmbedding(inputText: string) {
+    const body = {
+        model: "text-embedding-3-small", // Or "text-embedding-ada-002" for older model
+        input: inputText,
+        encoding_format: "float",
+    };
 
-
-if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    throw new Error('Missing required environment variables');
-}
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-// Helper function to delay execution
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-async function fetchCastsWithRetry(from: number, to: number, retryCount = 0): Promise<any> {
     try {
-        const { data, error } = await supabase
-            .from('casts')
-            .select('fid, casts')
-            .order('fid')
-            .range(from, to);
+        const response = await axios.post("https://api.openai.com/v1/embeddings", body, {
+            headers: {
+                "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+                "Content-Type": "application/json",
+            },
+        });
 
-        if (error) {
-            if (error.code === '57014' && retryCount < MAX_RETRIES) {
-                console.log(`Timeout error, retrying after longer delay... (Attempt ${retryCount + 1}/${MAX_RETRIES})`);
-                await delay(DELAY_BETWEEN_REQUESTS * (retryCount + 2));
-                return fetchCastsWithRetry(from, to, retryCount + 1);
-            }
-            throw error;
+        const data = response.data;
+
+        if (!data || !data.data || !data.data[0]?.embedding) {
+            throw new Error("Invalid embedding response");
         }
 
-        return data;
-    } catch (e) {
-        if (retryCount < MAX_RETRIES) {
-            console.log(`Unexpected error, retrying... (Attempt ${retryCount + 1}/${MAX_RETRIES})`);
-            await delay(DELAY_BETWEEN_REQUESTS * (retryCount + 2));
-            return fetchCastsWithRetry(from, to, retryCount + 1);
-        }
-        throw e;
+        return data.data[0].embedding;
+    } catch (err) {
+        console.error("Error generating embedding:", err);
+        return null;
     }
 }
 
-async function process_and_update_chunk(castsData: any[]) {
+async function generateUserEmbeddings(profile: User_Profile): Promise<{ summary: string, embedding: number[] }> {
     try {
-        for (const castEntry of castsData) {
-            const { fid, casts } = castEntry;
-
-            if (casts && casts.data && casts.data.length > 0) {
-                const authorData = casts.data[0].author;
-
-                const { data, error } = await supabase
-                    .from('users')
-                    .upsert({
-                        fid: fid,
-                        user_name: authorData.username,
-                        following_count: authorData.following_count,
-                        followers_count: authorData.follower_count,
-                        pfp_url: authorData.pfp_url,
-                        verified_addresses: authorData.verified_addresses
-                    });
-
-                if (error) {
-                    console.error(`Error updating user for fid ${fid}:`, error);
-                } else {
-                    console.log(`Successfully updated user for fid ${fid}`);
-                }
-            }
-
-            // Add delay between individual fid processing to avoid rate limits
-            await delay(DELAY_BETWEEN_REQUESTS / 2);
-        }
-    } catch (error) {
-        console.error('Error in processing and updating chunk:', error);
+        const summary = await getSummaryFromProfile(profile);
+        const embedding = await generateEmbedding(summary);
+        console.log("Generated for fid", profile.fid);
+        return { summary, embedding };
+    } catch (err) {
+        console.error("Error in analyzeProfileAndEmbed:", err);
+        throw err;
     }
 }
 
-async function update_users_from_casts() {
-    let totalProcessed = 0;
-    let hasMore = true;
-    let currentPage = 0;
-    let consecutiveErrors = 0;
+async function getSummaryFromProfile(profile: User_Profile) {
+    const prompt = `
+   You are an expert in user behavior analysis on decentralized social platforms like Farcaster. Your task is to deeply analyze a user's activity and generate a structured behavioral fingerprint — a list of 10–15 hyphen-separated keyword pairs that summarize the user’s interests, values, expertise, and social role.
+   
+   You have access to the following user data:
+   - **Bio**: a self-written description of identity, interests, and goals.
+   - **Username**: which can imply alignment with specific ideas, brands, or memes.
+   - **Follower count**: reflects perceived influence or authority.
+   - **Following count**: reflects curiosity, exploration, or selective attention.
+   - **Channels**: show which topics the user engages with deeply or supports.
+   - **User posts** (casts): can reveal what the user builds, supports, debates, or promotes.
+   
+   Analyze this information holistically. Pay close attention to:
+   - What the user *builds* (e.g., protocols, DAOs, apps)
+   - What the user *discusses or supports* (e.g., political ideologies, open-source, network states)
+   - What *communities* the user is part of or aspires to lead
+   - Indicators of *influence vs. exploration* (e.g., followers vs. following)
+   - Recurring themes in the language or focus (AI, art, governance, Base, etc.)
+   
+   Output a single field: "summary" — a comma-separated list of **12–15** meaningful keyword pairs (each in lowercase-hyphenated format), such as:
+   - \`solana-builder\`, \`dao-member\`, \`nft-collector\`, \`base-enthusiast\`, \`longevity-supporter\`, \`decentralized-governance-advocate\`, \`ai-content-curator\`, \`startup-societies-promoter\`, \`open-source-champion\`, \`network-state-strategist\`, etc.
+   `;
 
-    while (hasMore && consecutiveErrors < 3) {
-        const from = currentPage * PAGE_SIZE;
-        const to = from + PAGE_SIZE - 1;
+    const body = {
+        model: "gpt-4o-mini",
+        messages: [
+            {
+                role: "system",
+                content: "You are an expert profile analyzer that returns structured behavioral summaries. Return only the comma-separated keyword pairs, nothing else.",
+            },
+            {
+                role: "user",
+                content: `${prompt}
+                
+                Analyze this user profile:
+                
+                Username: ${profile.user_name}
+                Bio: ${profile.bio || 'No bio provided'}
+                Follower count: ${profile.follower_count}
+                Following count: ${profile.following_count}
+                Channels: ${profile.channels?.map(c => c.name || c).join(', ') || 'None'}
+                
+                Recent posts (limited to first 10):
+                ${profile.casts?.slice(0, 10).map(cast => `- ${cast.text}`).join('\n') || 'No posts available'}
+                
+                Return only a comma-separated list of 12-15 meaningful keyword pairs in lowercase-hyphenated format.`,
+            },
+        ],
+        temperature: 0.3,
+        max_tokens: 200,
+    };
 
-        console.log(`Fetching casts from ${from} to ${to}...`);
+    try {
+        const response = await axios.post("https://api.openai.com/v1/chat/completions", body, {
+            headers: {
+                "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+                "Content-Type": "application/json",
+            },
+        });
 
-        try {
-            const data = await fetchCastsWithRetry(from, to);
+        const data = response.data;
+        const summary = data.choices?.[0]?.message?.content?.trim();
 
-            if (!data || data.length === 0) {
-                hasMore = false;
-            } else {
-                // Process and update this chunk immediately
-                await process_and_update_chunk(data);
+        if (!summary) throw new Error("No summary generated");
 
-                totalProcessed += data.length;
-                currentPage++;
-                consecutiveErrors = 0;
-
-                console.log(`Processed ${data.length} casts. Total processed so far: ${totalProcessed}`);
-
-                if (data.length < PAGE_SIZE) {
-                    hasMore = false;
-                }
-
-                if (hasMore) {
-                    await delay(DELAY_BETWEEN_REQUESTS);
-                }
-            }
-        } catch (e) {
-            console.error(`Failed to fetch casts range ${from}-${to} after all retries:`, e);
-            consecutiveErrors++;
-            await delay(DELAY_BETWEEN_REQUESTS * 2);
-        }
+        return summary;
+    } catch (err) {
+        console.error("Error:", err);
+        return null;
     }
-
-    if (consecutiveErrors >= 3) {
-        console.warn('Stopped updating due to too many consecutive errors');
-    }
-
-    console.log(`Completed updating users with ${totalProcessed} total casts processed`);
-    return totalProcessed;
-};
-// https://8001/api/user-analysis
-async function main() {
-    await update_users_from_casts();
 }
 
-export { main };
+export { generateUserEmbeddings };
