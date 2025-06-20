@@ -124,7 +124,8 @@ async function fetch_users_data_with_retry(from: number, to: number, retryCount 
     try {
         const { data, error } = await supabase
             .from('users')
-            .select('fid, user_name, pfp_url, follower_count, verified_addresses, following_count, channels_following, channels_member')
+            .select('fid, user_name, pfp_url, follower_count, verified_addresses, following_count, channels_following, channels_member, embeddings, summary')
+            .or('embeddings.is.null,summary.is.null')
             .range(from, to);
 
         if (error) {
@@ -290,7 +291,8 @@ async function getTotalUserCount(): Promise<number> {
     try {
         const { count, error } = await supabase
             .from('users')
-            .select('*', { count: 'exact', head: true });
+            .select('*', { count: 'exact', head: true })
+            .or('embeddings.is.null,summary.is.null');
         
         if (error) throw error;
         return count || 0;
